@@ -1,6 +1,6 @@
 {
   "name": "formforges",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Schema-first form infrastructure for React — single package",
   "keywords": ["react", "form", "forms", "schema", "validation", "accessible"],
   "homepage": "https://formforge-website.vercel.app",
@@ -20,7 +20,7 @@
       "require": "./dist/index.cjs"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
