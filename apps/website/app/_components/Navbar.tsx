@@ -17,7 +17,7 @@ export function Navbar() {
       </Link>
 
       <div className="hidden md:flex items-center gap-6">
-        <Link href="https://docs-steel-sigma.vercel.app" className="text-sm text-slate-400 hover:text-white transition-colors no-underline">
+        <Link href="https://formforge-docs-site.vercel.app" className="text-sm text-slate-400 hover:text-white transition-colors no-underline">
           Docs
         </Link>
         <a
@@ -39,7 +39,7 @@ export function Navbar() {
       </div>
 
       <Link
-        href="https://docs-steel-sigma.vercel.app/docs/quick-start"
+        href="https://formforge-docs-site.vercel.app/docs/quick-start"
         className="text-sm px-4 py-2 rounded-lg font-medium text-white no-underline transition-all animate-pulse-glow"
         style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}
       >
