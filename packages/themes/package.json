@@ -1,6 +1,6 @@
 {
   "name": "@formforges/themes",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Theme system for FormForge — tokens, dark mode, responsive styling",
   "type": "module",
   "main": "./dist/index.cjs",

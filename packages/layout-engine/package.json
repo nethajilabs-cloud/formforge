@@ -1,6 +1,6 @@
 {
   "name": "@formforges/layout-engine",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Automatic responsive layout engine for FormForge — key differentiator",
   "type": "module",
   "main": "./dist/index.cjs",
