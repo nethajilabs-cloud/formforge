@@ -1,0 +1,47 @@
+{
+  "name": "formforges",
+  "version": "0.1.1",
+  "description": "Schema-first form infrastructure for React — single package",
+  "keywords": ["react", "form", "forms", "schema", "validation", "accessible"],
+  "homepage": "https://formforge-website.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nethajilabs-cloud/formforge.git"
+  },
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@formforges/accessibility": "workspace:*",
+    "@formforges/core": "workspace:*",
+    "@formforges/layout-engine": "workspace:*",
+    "@formforges/react": "workspace:*",
+    "@formforges/shared": "workspace:*",
+    "@formforges/themes": "workspace:*",
+    "@formforges/validator": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "tsup": "^8.0.0",
+    "typescript": "^5.7.3"
+  }
+}

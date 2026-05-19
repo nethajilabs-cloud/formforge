@@ -29,12 +29,6 @@ importers:
 
   apps/docs:
     dependencies:
-      '@formforges/core':
-        specifier: workspace:*
-        version: link:../../packages/core
-      '@formforges/react':
-        specifier: workspace:*
-        version: link:../../packages/react
       '@tailwindcss/postcss':
         specifier: ^4.3.0
         version: 4.3.0
@@ -189,6 +183,46 @@ importers:
         version: 18.3.28
       tsup:
         specifier: ^8.3.5
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+
+  packages/formforge:
+    dependencies:
+      '@formforges/accessibility':
+        specifier: workspace:*
+        version: link:../accessibility
+      '@formforges/core':
+        specifier: workspace:*
+        version: link:../core
+      '@formforges/layout-engine':
+        specifier: workspace:*
+        version: link:../layout-engine
+      '@formforges/react':
+        specifier: workspace:*
+        version: link:../react
+      '@formforges/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@formforges/themes':
+        specifier: workspace:*
+        version: link:../themes
+      '@formforges/validator':
+        specifier: workspace:*
+        version: link:../validator
+      react:
+        specifier: '>=18.0.0'
+        version: 18.3.1
+      react-dom:
+        specifier: '>=18.0.0'
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18.3.12
+        version: 18.3.28
+      tsup:
+        specifier: ^8.0.0
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.15)(typescript@5.9.3)
       typescript:
         specifier: ^5.7.3
