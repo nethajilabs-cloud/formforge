@@ -1,23 +1,20 @@
 {
-  "name": "formforge-docs",
+  "name": "formforge-website",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --port 3003",
     "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "start": "next start --port 3003"
   },
   "dependencies": {
-    "@formforges/core": "workspace:*",
-    "@formforges/react": "workspace:*",
-    "@tailwindcss/postcss": "^4.3.0",
     "next": "^15.1.4",
-    "postcss": "^8.5.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "@tailwindcss/postcss": "^4.3.0",
+    "postcss": "^8.5.15"
   },
   "devDependencies": {
     "@types/node": "^20.17.0",
