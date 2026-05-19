@@ -1,120 +1,117 @@
 # FormForge
 
-Modern schema-first form infrastructure for React applications.
+**Schema-first form infrastructure for React.**  
+Define your form in a plain config object. FormForge handles UI, validation, layout, accessibility, and themes — automatically.
 
-> Build beautiful forms with almost no setup.
+[![npm](https://img.shields.io/npm/v/formforges)](https://www.npmjs.com/package/formforges)
+[![license](https://img.shields.io/badge/license-MIT-blue)](#license)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue)](https://www.typescriptlang.org/)
 
-```tsx
-<FormForge schema={schema} />
-```
+**[Website & Docs →](https://formforge-website.vercel.app)**
 
 ---
 
-## Packages
+## Install
 
-| Package | Version | Description |
-|---|---|---|
-| [`@formforges/core`](./packages/core) | 0.1.0 | Framework-agnostic form engine |
-| [`@formforges/react`](./packages/react) | 0.1.0 | React renderer + hooks |
-| [`@formforges/validator`](./packages/validator) | 0.1.0 | Validation rules + Zod adapter |
-| [`@formforges/layout-engine`](./packages/layout-engine) | 0.1.0 | Auto responsive grid layout |
-| [`@formforges/accessibility`](./packages/accessibility) | 0.1.0 | ARIA + focus + keyboard |
-| [`@formforges/themes`](./packages/themes) | 0.1.0 | Token-based theme system |
-| [`@formforges/shared`](./packages/shared) | 0.1.0 | Shared utilities |
-| [`@formforges/devtools`](./packages/devtools) | 0.1.0 | Developer tools |
+```bash
+npm install formforges
+```
 
 ---
 
 ## Quick Start
 
-```bash
-npm install @formforges/react @formforges/core
-```
-
 ```tsx
-import { FormForge } from '@formforges/react'
+import { FormForge } from 'formforges'
 
 const schema = {
-  firstName: { type: 'text',  label: 'First Name', required: true },
-  lastName:  { type: 'text',  label: 'Last Name',  required: true },
-  email:     { type: 'email', label: 'Email',       required: true },
-  message:   { type: 'textarea', label: 'Message' },
+  name:    { type: 'text',     label: 'Full Name', required: true },
+  email:   { type: 'email',    label: 'Email',     required: true },
+  role:    { type: 'select',   label: 'Role',
+    options: [
+      { value: 'dev',      label: 'Developer' },
+      { value: 'designer', label: 'Designer'  },
+    ],
+  },
+  bio:     { type: 'textarea', label: 'Bio' },
 }
 
-export function App() {
+export function MyForm() {
   return (
     <FormForge
       schema={schema}
       theme="modern"
-      autoLayout
       onSubmit={async (values) => {
-        console.log(values)
+        await fetch('/api/submit', { method: 'POST', body: JSON.stringify(values) })
       }}
     />
   )
 }
 ```
 
+That's it — fully rendered, validated, accessible, responsive form.
+
 ---
 
 ## Features
 
-- **Schema-driven** — define your form once, render anywhere
-- **Auto layout** — smart 2-column grid, collapses to 1 on mobile
-- **Validation** — built-in rules, Zod adapter, async support
-- **Accessibility** — ARIA, focus management, keyboard nav — automatic
-- **Themes** — `modern`, `minimal`, `enterprise` out of the box
-- **Headless** — use hooks only, bring your own UI
-- **TypeScript-first** — strict types throughout
-- **SSR ready** — works with Next.js and React Server Components
-- **Minimal rerenders** — field-level subscriptions via `useSyncExternalStore`
+| | Feature |
+|---|---|
+| ⚡ | **Zero config UI** — labels, inputs, errors, submit — all automatic |
+| 📐 | **Smart layout** — 2-column grid, collapses to 1 column on mobile |
+| ✅ | **Validation** — built-in rules, async validators, Zod adapter |
+| 🎨 | **3 Themes** — `modern`, `minimal`, `enterprise` — fully token-based |
+| ♿ | **Accessibility** — `aria-required`, `aria-invalid`, `role="alert"`, focus management |
+| 🔌 | **Headless mode** — `useFormForge`, `useField`, `createForm()` |
+| 📦 | **Tiny** — tree-shakeable ESM, field-level subscriptions |
+| 🔷 | **TypeScript-first** — strict types, full schema inference |
 
 ---
 
-## Schema
+## Field Types
 
 ```ts
 const schema = {
-  // Text inputs
-  name:     { type: 'text',     label: 'Name',     required: true },
-  email:    { type: 'email',    label: 'Email',     required: true },
-  password: { type: 'password', label: 'Password'                  },
-  bio:      { type: 'textarea', label: 'Bio'                       },
+  // Text
+  name:     { type: 'text' },
+  email:    { type: 'email' },
+  password: { type: 'password' },
+  age:      { type: 'number', min: 18, max: 99 },
+  bio:      { type: 'textarea' },
+  dob:      { type: 'date' },
 
-  // Number
-  age: { type: 'number', label: 'Age', min: 18, max: 99 },
+  // Choice
+  agree:    { type: 'checkbox', label: 'I agree' },
+  role:     { type: 'radio',  options: [{ value: 'admin', label: 'Admin' }] },
+  country:  { type: 'select', options: [{ value: 'us', label: 'USA' }] },
 
-  // Date
-  dob: { type: 'date', label: 'Date of Birth' },
+  // Conditional
+  state: { type: 'text', showIf: (values) => values.country === 'us' },
 
-  // Select & Radio
-  country: {
-    type: 'select',
-    label: 'Country',
-    options: [
-      { value: 'us', label: 'United States' },
-      { value: 'in', label: 'India' },
-    ],
-  },
+  // Complex
+  links:   { type: 'array',  items:  { url: { type: 'text' } } },
+  address: { type: 'object', fields: { street: { type: 'text' }, city: { type: 'text' } } },
+}
+```
 
-  // Checkbox
-  agree: { type: 'checkbox', label: 'I agree to the terms', required: true },
+---
 
-  // Conditional field
-  state: {
-    type: 'text',
-    label: 'State',
-    showIf: (values) => values.country === 'us',
-  },
+## Themes
 
-  // Array / repeater
-  links: {
-    type: 'array',
-    label: 'Links',
-    items: {
-      url: { type: 'url', label: 'URL' },
-    },
-  },
+```tsx
+<FormForge schema={schema} theme="modern"     />  {/* Indigo, rounded, subtle shadows */}
+<FormForge schema={schema} theme="minimal"    />  {/* Black, sharp, no shadows */}
+<FormForge schema={schema} theme="enterprise" />  {/* Teal, professional, dense */}
+```
+
+Custom theme:
+
+```ts
+import { modernTokens } from 'formforges'
+
+const myTheme = {
+  ...modernTokens,
+  colors: { ...modernTokens.colors, primary: '#f59e0b' },
 }
 ```
 
@@ -123,104 +120,75 @@ const schema = {
 ## Validation
 
 ```ts
-import { rules } from '@formforges/validator'
-import { zodValidator } from '@formforges/validator'
-import { z } from 'zod'
+import { rules } from 'formforges'
 
 const schema = {
-  email: {
-    type: 'email',
-    validate: rules.email(),
-  },
-  password: {
-    type: 'password',
-    validate: [
-      rules.required(),
-      rules.minLength(8),
-    ],
-  },
-  username: {
+  email:    { type: 'email',    validate: rules.email() },
+  username: { type: 'text',     validate: rules.minLength(3) },
+  password: { type: 'password', validate: [
+    rules.required(),
+    rules.minLength(8),
+    rules.pattern(/[A-Z]/, 'Must contain uppercase'),
+  ]},
+  // Async
+  handle: {
     type: 'text',
-    // async validation
     validate: async (value) => {
-      const taken = await checkUsernameTaken(value)
-      return taken ? 'Username already taken' : null
+      const { taken } = await fetch(`/api/check?q=${value}`).then(r => r.json())
+      return taken ? 'Already taken' : null
     },
-  },
-  // Zod schema adapter
-  phone: {
-    type: 'text',
-    validate: zodValidator(z.string().regex(/^\+?[\d\s]{7,}$/, 'Invalid phone')),
   },
 }
 ```
 
-### Built-in rules
+Zod adapter:
 
-| Rule | Usage |
-|---|---|
-| `required` | `rules.required()` |
-| `email` | `rules.email()` |
-| `minLength` | `rules.minLength(8)` |
-| `maxLength` | `rules.maxLength(100)` |
-| `min` | `rules.min(0)` |
-| `max` | `rules.max(999)` |
-| `pattern` | `rules.pattern(/regex/)` |
-| `url` | `rules.url()` |
-| `oneOf` | `rules.oneOf(['a', 'b'])` |
+```ts
+import { zodValidator } from 'formforges'
+import { z } from 'zod'
 
----
-
-## Themes
-
-```tsx
-<FormForge schema={schema} theme="modern" />
-<FormForge schema={schema} theme="minimal" />
-<FormForge schema={schema} theme="enterprise" />
+validate: zodValidator(z.string().email())
 ```
 
 ---
 
 ## Headless Mode
 
-Full control over rendering — use hooks only:
+Full control over rendering:
 
 ```tsx
-import { FormProvider, FormRenderer, useFormForge } from '@formforges/react'
+import { useFormForge } from 'formforges'
 
 function MyForm() {
-  const { form, values, errors, isSubmitting, submit } = useFormForge({
+  const { values, errors, isSubmitting, submit, reset } = useFormForge({
     schema,
-    onSubmit: async (values) => console.log(values),
+    onSubmit: async (values) => { /* ... */ },
   })
 
   return (
-    <FormProvider form={form}>
-      <FormRenderer schema={schema} />
-      <button onClick={submit} disabled={isSubmitting}>
-        {isSubmitting ? 'Submitting...' : 'Submit'}
-      </button>
-    </FormProvider>
+    <form>
+      {/* your own UI */}
+      <button onClick={submit} disabled={isSubmitting}>Save</button>
+      <button onClick={reset} type="button">Reset</button>
+    </form>
   )
 }
 ```
 
-### `useField` — per-field access
+Custom field with `useField`:
 
 ```tsx
-import { useField } from '@formforges/react'
+import { useField } from 'formforges'
 
-function CustomEmailField() {
-  const { value, error, touched, onChange, onBlur } = useField('email')
+function StarRating({ fieldKey }: { fieldKey: string }) {
+  const { value, error, touched, onChange, onBlur } = useField(fieldKey)
 
   return (
     <div>
-      <input
-        type="email"
-        value={String(value)}
-        onChange={(e) => onChange(e.target.value)}
-        onBlur={onBlur}
-      />
+      {[1, 2, 3, 4, 5].map((star) => (
+        <button key={star} type="button" onClick={() => onChange(star)}
+                style={{ color: Number(value) >= star ? 'gold' : 'gray' }}>★</button>
+      ))}
       {touched && error && <p>{error}</p>}
     </div>
   )
@@ -229,62 +197,31 @@ function CustomEmailField() {
 
 ---
 
-## Layout Engine
+## Packages
 
-FormForge automatically detects field density and builds a responsive grid:
+`formforges` includes everything. Individual packages are also available:
 
-| Field type | Default width |
+| Package | Description |
 |---|---|
-| `text`, `email`, `password`, `select`, `date` | half (2-column grid) |
-| `textarea`, `array`, `object`, `checkbox`, `radio` | full width |
-
-Address fields (`street`, `city`, `zip`, etc.) are auto-grouped. Name fields (`firstName`, `lastName`) are placed side-by-side.
-
-Disable auto layout:
-```tsx
-<FormForge schema={schema} autoLayout={false} />
-```
-
----
-
-## `createForm` — framework-agnostic
-
-```ts
-import { createForm } from '@formforges/core'
-
-const form = createForm({
-  schema,
-  defaultValues: { email: '' },
-  onSubmit: async (values) => console.log(values),
-  onError: (errors) => console.error(errors),
-})
-
-form.setValue('email', 'user@example.com')
-form.validate()
-form.submit()
-form.reset()
-```
+| `formforges` | **All-in-one** (recommended) |
+| `@formforges/react` | React renderer + hooks |
+| `@formforges/core` | Framework-agnostic engine |
+| `@formforges/validator` | Validation rules + Zod |
+| `@formforges/themes` | Token-based themes |
+| `@formforges/layout-engine` | Auto responsive grid |
+| `@formforges/accessibility` | ARIA + focus + keyboard |
 
 ---
 
 ## Development
 
 ```bash
-# Clone
 git clone https://github.com/nethajilabs-cloud/formforge.git
 cd formforge
-
-# Install
 pnpm install
 
-# Build all packages
-pnpm build
-
-# Run tests (246 tests)
-pnpm test
-
-# Start playground
-pnpm playground
+pnpm build   # build all packages
+pnpm test    # run 246 tests
 ```
 
 ### Project structure
@@ -292,22 +229,30 @@ pnpm playground
 ```
 formforge/
 ├── apps/
-│   ├── playground/     # Vite + React live demo
-│   └── docs/           # Next.js documentation
+│   ├── website/      # Next.js marketing site + docs
+│   └── playground/   # Vite live demo
 ├── packages/
-│   ├── core/           # Framework-agnostic engine
-│   ├── react/          # React renderer + hooks
-│   ├── validator/      # Validation rules + Zod
-│   ├── themes/         # Token-based themes
-│   ├── layout-engine/  # Auto responsive grid
-│   ├── accessibility/  # ARIA + focus management
-│   ├── shared/         # Shared utilities
-│   └── devtools/       # Developer tools
-└── tests/              # 246 tests across 12 files
+│   ├── formforge/    # Umbrella package (formforges on npm)
+│   ├── core/         # Framework-agnostic engine
+│   ├── react/        # React renderer + hooks
+│   ├── validator/    # Validation + Zod
+│   ├── themes/       # Token-based themes
+│   ├── layout-engine/# Auto grid
+│   ├── accessibility/# ARIA + focus
+│   └── shared/       # Shared utilities
+└── tests/            # 246 tests across 12 files
 ```
+
+---
+
+## Links
+
+- **Website & Docs** — [formforge-website.vercel.app](https://formforge-website.vercel.app)
+- **npm** — [npmjs.com/package/formforges](https://www.npmjs.com/package/formforges)
+- **GitHub** — [github.com/nethajilabs-cloud/formforge](https://github.com/nethajilabs-cloud/formforge)
 
 ---
 
 ## License
 
-MIT
+MIT © 2025 FormForge

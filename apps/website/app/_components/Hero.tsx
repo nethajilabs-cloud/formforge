@@ -58,7 +58,7 @@ export function Hero() {
 
           <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: '0.5s' }}>
             <Link
-              href="https://formforge-docs-site.vercel.app/docs/quick-start"
+              href="/docs/docs/quick-start"
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-semibold text-white no-underline transition-all hover:scale-105 active:scale-95"
               style={{
                 background: 'linear-gradient(135deg,#6366f1,#8b5cf6)',

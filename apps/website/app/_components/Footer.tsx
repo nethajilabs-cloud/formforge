@@ -20,7 +20,7 @@ export function Footer() {
         </div>
         <div className="flex items-center gap-6 text-sm text-slate-500">
           <a
-            href="https://formforge-docs-site.vercel.app"
+            href="/docs"
             className="hover:text-white transition-colors no-underline"
           >
             Docs
