@@ -20,7 +20,7 @@ export function Footer() {
         </div>
         <div className="flex items-center gap-6 text-sm text-slate-500">
           <a
-            href="http://localhost:3002"
+            href="https://docs-steel-sigma.vercel.app"
             className="hover:text-white transition-colors no-underline"
           >
             Docs

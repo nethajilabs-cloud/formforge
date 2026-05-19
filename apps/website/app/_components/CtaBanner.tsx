@@ -34,7 +34,7 @@ export function CtaBanner() {
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
           <Link
-            href="http://localhost:3002/docs/quick-start"
+            href="https://docs-steel-sigma.vercel.app/docs/quick-start"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-semibold text-white no-underline transition-all hover:scale-105"
             style={{
               background: 'linear-gradient(135deg,#6366f1,#8b5cf6)',

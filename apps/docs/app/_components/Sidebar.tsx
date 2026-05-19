@@ -23,7 +23,7 @@ const nav = [
 export function Sidebar() {
   return (
     <aside className="w-56 shrink-0 border-r border-gray-200 px-5 py-10 sticky top-0 h-screen overflow-y-auto">
-      <Link href="http://localhost:3003" className="flex items-center gap-2 mb-8">
+      <Link href="https://website-kappa-nine-97.vercel.app" className="flex items-center gap-2 mb-8">
         <div className="w-7 h-7 bg-indigo-600 rounded-md flex items-center justify-center">
           <span className="text-white font-bold text-sm">F</span>
         </div>

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "engines": { "node": ">=20.0.0" },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,14 +11,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@formforges/core": "workspace:*",
-    "@formforges/react": "workspace:*",
-    "@tailwindcss/postcss": "^4.3.0",
     "next": "^15.1.4",
-    "postcss": "^8.5.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "tailwindcss": "^4.3.0"
+    "tailwindcss": "^4.3.0",
+    "@tailwindcss/postcss": "^4.3.0",
+    "postcss": "^8.5.15"
   },
   "devDependencies": {
     "@types/node": "^20.17.0",
